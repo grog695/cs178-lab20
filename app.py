@@ -173,13 +173,6 @@ def build_good_chart(df, display_name, types):
     #           primary type is "fire" the color would be TYPE_COLORS["fire"].
     #           Use types[0] to always get the primary type dynamically.
 
-    good_fig = px.pie(
-        df,
-        names="stat",
-        values="value",
-        color="stat",
-    )
-
 
     # ── END ────────────────────────────────────────────────────────────────────
     return apply_dark_theme(good_fig)
