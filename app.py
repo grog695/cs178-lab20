@@ -215,7 +215,7 @@ def build_my_chart(df, display_name, types):
 
     fig.update_layout(
         title=f"Stat Bar Chart - {display_name}",
-        xaxis=dict(title="Stat Value", range=255),
+        xaxis=dict(title="Stat Value", range=[0,255]),
         yaxis=dict(title="Stat Name")
     )
     # ── End of placeholder ─────────────────────────────────────────────────────
