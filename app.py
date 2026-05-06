@@ -146,14 +146,25 @@ def build_good_chart(df, display_name, types):
     stats_closed  = stats  + [stats[0]]
     values_closed = values + [values[0]]
 
+    hex_color = TYPE_COLORS[types[0]]   # e.g. "#F08030"
+    
+    # Strip the # and convert each pair of hex digits to an integer (0–255)
+    
+    r = int(hex_color[1:3], 16)
+    g = int(hex_color[3:5], 16)
+    b = int(hex_color[5:7], 16)
+
+    fill   = f"rgba({r}, {g}, {b}, 0.3)"   # semi-transparent for the fill
+    border = f"rgba({r}, {g}, {b}, 1.0)"   # fully opaque for the line
+
     good_fig = go.Figure()
 
     good_fig.add_trace(go.Scatterpolar(
         r=values_closed,
         theta=stats_closed,
         fill="toself",
-        fillcolor="rgba(253, 151, 31, 0.3)",  # ← you'll change this
-        line=dict(color="#fd971f"),            # ← and this
+        fillcolor=fill,  # ← you'll change this
+        line=dict(color=border),            # ← and this
         name=display_name,
     ))
 
@@ -166,6 +177,7 @@ def build_good_chart(df, display_name, types):
             )
         ),
     )
+
 
 
     # Step 2 — replace the hardcoded fillcolor and line color with the
@@ -188,9 +200,18 @@ def build_my_chart(df, display_name, types):
     Your chart should work well for any Pokémon, not just Charizard.
     """
     # ── Replace this placeholder with your own chart ───────────────────────────
+
+    stats  = df["stat"].tolist()
+    values = df["value"].tolist()
+    stats_closed  = stats  + [stats[0]]
+    values_closed = values + [values[0]]
+
     fig = go.Figure()
+
     fig.update_layout(
-        title="Your chart goes here — edit build_my_chart() in app.py",
+        title=f"Stat Bar Chart - {display_name}",
+        xaxis=dict(title="Stat Value"),
+        yaxis=dict(title="Stat Name")
     )
     # ── End of placeholder ─────────────────────────────────────────────────────
     return apply_dark_theme(fig)
