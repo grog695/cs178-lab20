@@ -201,16 +201,21 @@ def build_my_chart(df, display_name, types):
     """
     # ── Replace this placeholder with your own chart ───────────────────────────
 
-    stats  = df["stat"].tolist()
-    values = df["value"].tolist()
-    stats_closed  = stats  + [stats[0]]
-    values_closed = values + [values[0]]
+    df_sorted = df.sort_values(by="value", ascending=True)
 
     fig = go.Figure()
 
+    fig.add_trace(go.Bar(
+        x=df_sorted["value"],
+        y=df_sorted["stat"],
+        orientation='h',
+        text=df_sorted["value"],  
+        textposition='auto',
+    ))
+
     fig.update_layout(
         title=f"Stat Bar Chart - {display_name}",
-        xaxis=dict(title="Stat Value"),
+        xaxis=dict(title="Stat Value", range=255),
         yaxis=dict(title="Stat Name")
     )
     # ── End of placeholder ─────────────────────────────────────────────────────
